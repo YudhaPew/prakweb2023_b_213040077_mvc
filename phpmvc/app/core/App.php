@@ -8,9 +8,10 @@ class App
 
   public function __construct()
   {
-    $url = $this->parseURL();
 
-    if (!empty($url[0]) && file_exists('../app/controllers' . $url[0] . '.php')) {
+    $url = $this->parseURL();
+    // CONTROLLER
+    if ($url !== null && file_exists('../app/controllers/' . $url[0] . '.php')) {
       $this->controller = $url[0];
       unset($url[0]);
     }
@@ -25,12 +26,12 @@ class App
         unset($url[1]);
       }
     }
-
-    // params
+    // Parameter
     if (!empty($url)) {
       $this->params = array_values($url);
     }
 
+    // Jalankan Controller dan Method serta kirimkan params jika ada
     call_user_func_array([$this->controller, $this->method], $this->params);
   }
 
@@ -44,3 +45,4 @@ class App
     }
   }
 }
+
